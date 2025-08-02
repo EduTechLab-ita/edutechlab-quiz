@@ -10,15 +10,15 @@
   "scope": "./",
   "lang": "it",
   "categories": ["education", "games", "kids"],
-  "icons": [
+ "icons": [
     {
-      "src": "icona-192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icona-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
