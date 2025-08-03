@@ -1343,6 +1343,35 @@
     </div>
 
     <script>
+        // ////////////// INIZIO MODIFICHE PER BANNER AGGIORNAMENTO //////////////
+        let newWorker; // Variabile per tenere traccia del nuovo Service Worker
+
+        // Funzione per mostrare il banner
+        function showUpdateBanner() {
+            const banner = document.getElementById('update-banner');
+            banner.classList.remove('banner-nascosto');
+
+            document.getElementById('update-now-btn').addEventListener('click', () => {
+                // Invia un messaggio al nuovo service worker per attivarsi subito
+                newWorker.postMessage({ action: 'skipWaiting' });
+            });
+
+            document.getElementById('update-later-btn').addEventListener('click', () => {
+                banner.classList.add('banner-nascosto');
+            });
+        }
+        
+        function trackInstalling(worker) {
+            worker.addEventListener('statechange', () => {
+                if (worker.state === 'installed') {
+                // Il nuovo worker è installato e in attesa di attivazione
+                newWorker = worker;
+                showUpdateBanner();
+                }
+            });
+        }
+        // ////////////// FINE MODIFICHE PER BANNER AGGIORNAMENTO //////////////
+
         // Global Variables
         let currentClass = 1;
         let currentGame = '';
@@ -2897,16 +2926,34 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadAdaptiveData();
             
-            // Register service worker for PWA
+            // ////////////// INIZIO LOGICA SERVICE WORKER MODIFICATA //////////////
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(function(registration) {
-                        console.log('Service Worker registered successfully:', registration.scope);
-                    })
-                    .catch(function(error) {
-                        console.log('Service Worker registration failed:', error);
+                navigator.serviceWorker.register('./sw.js').then(reg => {
+                    // 1. Controlla se c'è già un worker in attesa
+                    if (reg.waiting) {
+                        newWorker = reg.waiting;
+                        showUpdateBanner();
+                        return;
+                    }
+
+                    // 2. Controlla se un nuovo worker si sta installando
+                    if (reg.installing) {
+                        trackInstalling(reg.installing);
+                        return;
+                    }
+
+                    // 3. Ascolta per futuri worker che entrano in gioco
+                    reg.addEventListener('updatefound', () => {
+                        trackInstalling(reg.installing);
                     });
+                });
+
+                // Ricarica la pagina una volta che il nuovo worker ha preso il controllo
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    window.location.reload();
+                });
             }
+            // ////////////// FINE LOGICA SERVICE WORKER MODIFICATA //////////////
         });
 
         // Keyboard shortcuts
