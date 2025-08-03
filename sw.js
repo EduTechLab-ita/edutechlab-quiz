@@ -1,5 +1,5 @@
 // IMPORTANTE: Incrementa questa versione a 'v3', 'v4', ecc. ad ogni nuovo aggiornamento!
-const CACHE_NAME = 'edutech-lab-v4'; 
+const CACHE_NAME = 'edutech-lab-v5'; 
 const urlsToCache = [
   './',
   './index.html',
