@@ -1,8 +1,12 @@
-const CACHE_NAME = 'edutech-lab-v1';
+// IMPORTANTE: Incrementa questa versione a 'v3', 'v4', ecc. ad ogni nuovo aggiornamento!
+const CACHE_NAME = 'edutech-lab-v2';
 const urlsToCache = [
   './',
   './index.html',
   './manifest.json',
+  './logo-colorato.png', // Aggiunto per il funzionamento offline
+  './icon-192.png',      // Aggiunto per il funzionamento offline
+  './icon-512.png',      // Aggiunto per il funzionamento offline
   './icona-72.png',
   './icona-96.png',
   './icona-128.png',
@@ -25,6 +29,14 @@ self.addEventListener('install', function(event) {
   );
 });
 
+// NUOVA SEZIONE: Ascolta i messaggi dalla pagina
+// Questo serve per attivare il nuovo Service Worker quando l'utente clicca "Aggiorna subito"
+self.addEventListener('message', function(event) {
+  if (event.data && event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});
+
 // Attivazione del Service Worker
 self.addEventListener('activate', function(event) {
   console.log('Service Worker: Activating...');
@@ -42,7 +54,7 @@ self.addEventListener('activate', function(event) {
   );
 });
 
-// Intercettazione delle richieste
+// Intercettazione delle richieste (invariato)
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
