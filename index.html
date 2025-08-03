@@ -7,7 +7,6 @@
     <meta name="description" content="Piattaforma di Pensiero Computazionale per la Scuola Primaria">
     <meta name="theme-color" content="#3B82F6">
     
-    <!-- PWA Meta Tags COMPLETI -->
     <link rel="manifest" href="manifest.json">
    <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -16,7 +15,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="EduTech Quiz">
     
-    <!-- Apple PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="EduTech Lab">
@@ -28,7 +26,6 @@
     <link rel="apple-touch-icon" sizes="152x152" href="icona-152.png">
     <link rel="apple-touch-icon" sizes="192x192" href="icona-192.png">
     
-    <!-- Microsoft Tiles -->
     <meta name="msapplication-TileImage" content="icona-144.png">
     <meta name="msapplication-TileColor" content="#3B82F6">
     
@@ -46,6 +43,43 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
+
+        /* STILE BANNER AGGIORNAMENTO - INIZIO */
+        #update-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            background-color: #4CAF50; /* Verde */
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #update-banner.banner-nascosto {
+            display: none;
+        }
+
+        #update-banner button {
+            padding: 8px 12px;
+            border: 1px solid white;
+            background-color: transparent;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #update-banner button:hover {
+            background-color: white;
+            color: #4CAF50;
+        }
+        /* STILE BANNER AGGIORNAMENTO - FINE */
 
         .main-container {
             min-height: 100vh;
@@ -1096,7 +1130,11 @@
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
+    <div id="update-banner" class="banner-nascosto">
+      <span>L'applicazione è stata aggiornata.</span>
+      <button id="update-now-btn">Aggiorna subito</button>
+      <button id="update-later-btn">Più tardi</button>
+    </div>
     <div class="animated-bg">
         <div class="floating-shape"></div>
         <div class="floating-shape"></div>
@@ -1105,16 +1143,14 @@
     </div>
 
     <div class="main-container">
-        <!-- Homepage: Scelta Classe -->
         <div id="homepage">
             <header class="header">
                <h1><img src="logo-colorato.png" alt="EduTech Lab" style="width: 96px; height: 96px; vertical-align: middle; margin-right: 15px; filter:
-  drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"> EduTech Lab</h1>
+ drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"> EduTech Lab</h1>
                 <h2>Pensiero Computazionale per la Scuola Primaria</h2>
                 <p>Scegli la tua classe e inizia il viaggio nel mondo del coding!</p>
             </header>
 
-            <!-- Stats Bar (visible when there are points) -->
             <div id="stats-bar" class="stats-bar" style="display: none;">
                 <div class="stat-item stat-stars">⭐ <span id="stars-count">0</span> stelle</div>
                 <div class="stat-item stat-score">🏆 <span id="score-count">0</span> punti</div>
@@ -1184,7 +1220,6 @@
                 </div>
             </div>
 
-            <!-- Info Project -->
             <div class="info-project">
                 <div style="text-align: center; margin-bottom: 2rem;">
                     <h3 style="font-size: 2rem; color: #1F2937; margin-bottom: 1rem;">🚀 EduTech Lab Platform</h3>
@@ -1229,7 +1264,6 @@
             </footer>
         </div>
 
-        <!-- Sezione Giochi per Classe -->
         <div id="gamesSection" class="games-section">
             <div class="game-header">
                 <h2 id="classTitle">Classe selezionata</h2>
@@ -1259,17 +1293,14 @@
             </div>
 
             <div class="games-grid" id="gamesGrid">
-                <!-- I giochi verranno caricati dinamicamente -->
-            </div>
+                </div>
 
-            <!-- Colophon per pagina Giochi -->
             <div class="colophon">
                 <p><strong>EduTech Lab</strong> - Piattaforma di Pensiero Computazionale</p>
                 <p class="copyright">© 2025 Fabio Rizzotto - Tutti i diritti riservati</p>
             </div>
         </div>
 
-        <!-- Interfaccia Gioco -->
         <div id="gameInterface" class="game-interface">
             <div class="game-header">
                 <div>
@@ -1297,15 +1328,13 @@
             <div class="message" id="messageContainer"></div>
 
             <div class="game-content" id="gameContent">
-                <!-- Il contenuto del gioco verrà caricato qui -->
-            </div>
+                </div>
 
             <div style="text-align: center; margin-top: 2rem;">
                 <button class="btn btn-primary" onclick="nextQuestion()">🔄 Prossima Domanda</button>
                 <button class="btn btn-success" onclick="checkAnswer()" style="display: none;" id="checkAnswerBtn">✅ Verifica Risposta</button>
             </div>
 
-            <!-- Colophon per pagina Gioco -->
             <div class="colophon">
                 <p><strong>EduTech Lab</strong> - Piattaforma di Pensiero Computazionale</p>
                 <p class="copyright">© 2025 Fabio Rizzotto - Tutti i diritti riservati</p>
@@ -2346,7 +2375,7 @@
             document.getElementById('gameContent').innerHTML = `
                 <div class="question">${selectedOperation.question}</div>
                 <div style="background: #E8F5E8; padding: 1.5rem; border-radius: 1rem; margin: 2rem 0;">
-                    <strong>📦 Ricorda:</strong> Una variabile è come una scatola con un nome che contiene un valore!
+                    <strong>📦 Ricorda:</strong> Una variabile è come una scatola con un'etichetta che contiene un valore!
                 </div>
                 <div class="answers-grid">
                     ${generateNumberOptions(selectedOperation.result, 4).map(num => 
