@@ -1,12 +1,16 @@
-// IMPORTANTE: Incrementa questa versione a 'v3', 'v4', ecc. ad ogni nuovo aggiornamento!
-const CACHE_NAME = 'edutech-lab-v5'; 
+const CACHE_NAME = 'edutech-lab-v1';
 const urlsToCache = [
   './',
   './index.html',
   './manifest.json',
-  './logo-colorato.png',
-  './icon-192.png',
-  './icon-512.png'
+  './icona-72.png',
+  './icona-96.png',
+  './icona-128.png',
+  './icona-144.png',
+  './icona-152.png',
+  './icona-192.png',
+  './icona-384.png',
+  './icona-512.png'
 ];
 
 // Installazione del Service Worker
@@ -19,13 +23,6 @@ self.addEventListener('install', function(event) {
         return cache.addAll(urlsToCache);
       })
   );
-});
-
-// Ascolta i messaggi dalla pagina
-self.addEventListener('message', function(event) {
-  if (event.data && event.data.action === 'skipWaiting') {
-    self.skipWaiting();
-  }
 });
 
 // Attivazione del Service Worker
@@ -50,6 +47,7 @@ self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
+        // Cache hit - return response
         if (response) {
           return response;
         }
